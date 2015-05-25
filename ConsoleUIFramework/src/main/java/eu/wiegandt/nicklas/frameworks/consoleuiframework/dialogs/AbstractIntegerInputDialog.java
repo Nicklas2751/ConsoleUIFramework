@@ -10,7 +10,7 @@ public abstract class AbstractIntegerInputDialog extends AbstractInputDialog<Int
 
 
 	@Override
-	protected final Integer readInput() {
+	protected final Integer readInput(String aDialogText) {
 		return ConsoleReader.readNumber();
 	}
 

@@ -11,14 +11,14 @@ public abstract class AbstractFileInputDialog extends AbstractInputDialog<File> 
 
 	private FileFilter fileFilter;
 
-	public AbstractFileInputDialog(String aDisplayText, String aDialogText) {
-		super(aDisplayText, aDialogText);
+	public AbstractFileInputDialog(String aDisplayText, String... aDialogTexts) {
+		super(aDisplayText, aDialogTexts);
 		fileFilter = null;
 	}
 
-	public AbstractFileInputDialog(String aDisplayText, String aDialogText,
+	public AbstractFileInputDialog(String aDisplayText, String[] aDialogTexts,
 			FileFilter aFileFilter) {
-		this(aDisplayText, aDialogText);
+		this(aDisplayText, aDialogTexts);
 		setFileFilter(aFileFilter);
 	}
 
@@ -27,14 +27,14 @@ public abstract class AbstractFileInputDialog extends AbstractInputDialog<File> 
 	}
 
 	@Override
-	protected final File readInput() {
+	protected final File readInput(String aDialogText) {
 		File file;
 		boolean invalid = false;
 
 		do {
 			if (invalid) {
 				ConsoleTools.printLine();
-				printDialogText();
+				printDialogText(aDialogText);
 			}
 
 			String filePath = ConsoleReader.getInstance().readLine();
