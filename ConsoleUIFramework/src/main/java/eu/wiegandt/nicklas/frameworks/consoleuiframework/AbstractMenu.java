@@ -35,13 +35,7 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 	}
 
 	private final int getNextNumberForEntry() {
-		int nextNumber;
-		if (hasParent && menuEntries.isEmpty()) {
-			nextNumber = 1;
-		} else {
-			nextNumber = menuEntries.size();
-		}
-		return nextNumber;
+		return menuEntries.size() + 1;
 	}
 
 	@Override
@@ -58,7 +52,7 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 			entryNumber = ConsoleReader.readNumber();
 
 			numberIsInvalid = entryNumber != RETURN_ENTRY_NUMBER
-					&& menuEntries.containsKey(entryNumber);
+					&& !menuEntries.containsKey(entryNumber);
 
 			if (numberIsInvalid) {
 				Errors.ENTRY_NOT_EXISTS.print();
@@ -88,8 +82,7 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 	private final void printReturnEntry() {
 		ConsoleTools.getLogger().info(
 				String.format(MENU_ENTRY_PRINT_PATTERN, RETURN_ENTRY_NUMBER,
-						menuEntries.get(MetaTexts.RETURN.getDisplayText())
-								.getDisplayText()));
+						MetaTexts.RETURN.getDisplayText()));
 	}
 
 }
