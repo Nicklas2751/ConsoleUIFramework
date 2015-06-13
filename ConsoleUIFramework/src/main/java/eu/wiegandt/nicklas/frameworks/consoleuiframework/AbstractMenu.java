@@ -22,7 +22,6 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 		super(aDisplayText);
 		menuEntries = new TreeMap<Integer, AbstractMenuEntry>();
 		hasParent = aHasParent;
-		fillMenuEntries();
 	}
 
 	protected abstract void fillMenuEntries();
@@ -40,8 +39,15 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 
 	@Override
 	public final void start() {
+		fillMenuEntriesIfNecessary();
 		printMenuEntries();
 		chooseEntry();
+	}
+
+	private void fillMenuEntriesIfNecessary() {
+		if (menuEntries.isEmpty()) {
+			fillMenuEntries();
+		}
 	}
 
 	private final void chooseEntry() {
