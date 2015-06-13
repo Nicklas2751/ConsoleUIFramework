@@ -7,34 +7,47 @@ import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.Dialogs;
 import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.Errors;
 import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.MetaTexts;
 
+/**
+ * This class contains all methods which are needed for a working menu. <br>
+ * <hr>
+ * <br>
+ * <img src="doc-files/AbstractMenu.png" alt="AbstractMenu">
+ * 
+ * @author Nicklas Wiegandt (Nicklas2751)<br>
+ *         <b>Mail:</b> nicklas@wiegandt.eu<br>
+ *         <b>Jabber:</b> nicklas2751@elaon.de<br>
+ *
+ */
 public abstract class AbstractMenu extends AbstractMenuEntry {
 	private static final String MENU_ENTRY_PRINT_PATTERN = "%d."
 			+ ConsoleTools.TAB + "%s";
 	private static final int RETURN_ENTRY_NUMBER = 0;
-	private final SortedMap<Integer, AbstractMenuEntry> menuEntries;
 	private boolean hasParent;
+	private final SortedMap<Integer, AbstractMenuEntry> menuEntries;
 
+	/**
+	 * The constructor for a main menu. The hasParent filed will be set to
+	 * false.
+	 * 
+	 * @param aDisplayText
+	 *            The display text.
+	 */
 	public AbstractMenu(String aDisplayText) {
 		this(aDisplayText, false);
 	}
 
+	/**
+	 * The constructor.
+	 * 
+	 * @param aDisplayText
+	 *            The display text.
+	 * @param aHasParent
+	 *            If true the menu print a return menu entry.
+	 */
 	public AbstractMenu(String aDisplayText, boolean aHasParent) {
 		super(aDisplayText);
 		menuEntries = new TreeMap<Integer, AbstractMenuEntry>();
 		hasParent = aHasParent;
-	}
-
-	protected abstract void fillMenuEntries();
-
-	protected final void addMenuEntries(AbstractMenuEntry... aMenuEntries) {
-		for (AbstractMenuEntry menuEntry : aMenuEntries) {
-			int nextNumber = getNextNumberForEntry();
-			menuEntries.put(nextNumber, menuEntry);
-		}
-	}
-
-	private final int getNextNumberForEntry() {
-		return menuEntries.size() + 1;
 	}
 
 	@Override
@@ -44,11 +57,23 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 		chooseEntry();
 	}
 
-	private void fillMenuEntriesIfNecessary() {
-		if (menuEntries.isEmpty()) {
-			fillMenuEntries();
+	/**
+	 * This method adds menu entries to the method.
+	 * 
+	 * @param aMenuEntries
+	 *            The menu entries wich will be set.
+	 */
+	protected final void addMenuEntries(AbstractMenuEntry... aMenuEntries) {
+		for (AbstractMenuEntry menuEntry : aMenuEntries) {
+			int nextNumber = getNextNumberForEntry();
+			menuEntries.put(nextNumber, menuEntry);
 		}
 	}
+
+	/**
+	 * This method fills the menu with entries.
+	 */
+	protected abstract void fillMenuEntries();
 
 	private final void chooseEntry() {
 		boolean numberIsInvalid;
@@ -67,10 +92,14 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 		startChoosenEntry(entryNumber);
 	}
 
-	private final void startChoosenEntry(int entryNumber) {
-		if (entryNumber != RETURN_ENTRY_NUMBER) {
-			menuEntries.get(entryNumber).start();
+	private void fillMenuEntriesIfNecessary() {
+		if (menuEntries.isEmpty()) {
+			fillMenuEntries();
 		}
+	}
+
+	private final int getNextNumberForEntry() {
+		return menuEntries.size() + 1;
 	}
 
 	private final void printMenuEntries() {
@@ -89,6 +118,12 @@ public abstract class AbstractMenu extends AbstractMenuEntry {
 		ConsoleTools.getLogger().info(
 				String.format(MENU_ENTRY_PRINT_PATTERN, RETURN_ENTRY_NUMBER,
 						MetaTexts.RETURN.getDisplayText()));
+	}
+
+	private final void startChoosenEntry(int entryNumber) {
+		if (entryNumber != RETURN_ENTRY_NUMBER) {
+			menuEntries.get(entryNumber).start();
+		}
 	}
 
 }

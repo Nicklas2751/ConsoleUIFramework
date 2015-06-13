@@ -4,21 +4,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.DebugMessages;
+import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.Errors;
 
+/**
+ * This is a console line reader which can read strings and integers from the
+ * console.
+ * 
+ * <br>
+ * <hr>
+ * <br>
+ * <img src="doc-files/ConsoleReader.png" alt="ConsoleReader">
+ * 
+ * @author Nicklas Wiegandt (Nicklas2751)<br>
+ *         <b>Mail:</b> nicklas@wiegandt.eu<br>
+ *         <b>Jabber:</b> nicklas2751@elaon.de<br>
+ *
+ */
 public class ConsoleReader {
-	private static final Logger LOG = LogManager.getLogger(ConsoleReader.class);
 
 	private static ConsoleReader instance;
 
 	private BufferedReader bufferedReader;
 
-	private ConsoleReader() {
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		bufferedReader = new BufferedReader(inputStreamReader);
-	}
-
+	/**
+	 * @return A instance of the class.
+	 */
 	public static ConsoleReader getInstance() {
 		if (instance == null) {
 			instance = new ConsoleReader();
@@ -26,6 +37,12 @@ public class ConsoleReader {
 		return instance;
 	}
 
+	/**
+	 * Reads an integer from the console. If the console input wasn't an
+	 * integer, a error will be printed and the input will be read again.
+	 * 
+	 * @return The read number.
+	 */
 	public static Integer readNumber() {
 		Integer number;
 		do {
@@ -34,32 +51,42 @@ public class ConsoleReader {
 				number = Integer.parseInt(inputText);
 			} catch (NumberFormatException numberFormatException) {
 				number = null;
-				LOG.info("Ihre Eingabe war keine valide Nummer! Bitte versuchen Sie es erneut:");
+				Errors.NUMBER_INPUT_INVALID.print();
 			}
 		} while (number == null);
 		return number;
 	}
 
+	private ConsoleReader() {
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		bufferedReader = new BufferedReader(inputStreamReader);
+	}
+
+	/**
+	 * This method closes the resources.
+	 */
+	public void close() {
+		try {
+			bufferedReader.close();
+		} catch (IOException ioException2) {
+			DebugMessages.BUFFERED_READER_CANT_CLOSED.print(ioException2);
+		}
+	}
+
+	/**
+	 * This methods read a line from the console as a string.
+	 * 
+	 * @return The read line as a string.
+	 */
 	public String readLine() {
 		String line;
 		try {
 			line = bufferedReader.readLine();
 		} catch (IOException ioException) {
-			LOG.fatal("Beim Lesen der Eingabe ist ein Fehler aufgetreten!",
-					ioException);
+			Errors.INPUT_READ_ERROR.printFatal(ioException);
 			line = "";
 		}
 		return line;
-	}
-
-	public void close() {
-		try {
-			bufferedReader.close();
-		} catch (IOException ioException2) {
-			LOG.debug(
-					"Beim schlieÃen des BufferedReaders ist ein weiterer Fehler aufgetreten!",
-					ioException2);
-		}
 	}
 
 }

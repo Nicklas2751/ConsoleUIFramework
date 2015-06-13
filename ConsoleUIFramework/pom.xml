@@ -5,7 +5,24 @@
 	<artifactId>ConsoleUIFramework</artifactId>
 	<version>1.0</version>
 	<name>Console UI Framework</name>
-	<description>A simple framework to build a console ui.</description>
+	<description>A simple framework to quick build a console ui.</description>
+
+	<developers>
+		<developer>
+			<id>Nicklas2751</id>
+			<name>Nicklas Wiegandt</name>
+			<email>nicklas@wiegandt.eu</email>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Berlin</timezone>
+			<properties>
+				<jabber>nicklas2751@elaon.de</jabber>
+			</properties>
+			<url>http://nicklas.wiegandt.eu</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -50,4 +67,56 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>create-license-list</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<version>1.8</version>
+						<configuration>
+							<useMissingFile>true</useMissingFile>
+						</configuration>
+						<executions>
+							<execution>
+								<id>create-license-list</id>
+								<goals>
+									<goal>aggregate-add-third-party</goal>
+								</goals>
+								<phase>generate-resources</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>create-javadoc</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
+						<configuration>
+							<doctitle>${project.name} (${project.version})</doctitle>
+							<show>private</show>
+							<docfilessubdirs>true</docfilessubdirs>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>javadoc</goal>
+								</goals>
+								<phase>install</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
