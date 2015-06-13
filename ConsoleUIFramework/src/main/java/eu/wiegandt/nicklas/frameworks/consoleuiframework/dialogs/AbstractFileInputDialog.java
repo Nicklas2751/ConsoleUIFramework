@@ -9,7 +9,9 @@ import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.Errors;
 
 public abstract class AbstractFileInputDialog extends AbstractInputDialog<File> {
 
+	private static final String ZERO = "0";
 	private FileFilter fileFilter;
+	private Boolean cancelOnZero;
 
 	public AbstractFileInputDialog(String aDisplayText, String... aDialogTexts) {
 		super(aDisplayText, aDialogTexts);
@@ -17,15 +19,29 @@ public abstract class AbstractFileInputDialog extends AbstractInputDialog<File> 
 	}
 
 	public AbstractFileInputDialog(String aDisplayText, String[] aDialogTexts,
-			FileFilter aFileFilter) {
+			Boolean aCancelOnZero) {
 		this(aDisplayText, aDialogTexts);
+		cancelOnZero = aCancelOnZero;
+	}
+
+	public AbstractFileInputDialog(String aDisplayText, String[] aDialogTexts,
+			FileFilter aFileFilter, Boolean aCancelOnZero) {
+		this(aDisplayText, aDialogTexts, aCancelOnZero);
 		setFileFilter(aFileFilter);
+	}
+
+	public AbstractFileInputDialog(String aDisplayText, String[] aDialogTexts,
+			FileFilter aFileFilter) {
+		this(aDisplayText, aDialogTexts, aFileFilter, false);
 	}
 
 	private final void setFileFilter(FileFilter aFileFilter) {
 		fileFilter = aFileFilter;
 	}
 
+	/**
+	 * @return null if saving should be canceled.
+	 */
 	@Override
 	protected final File readInput(String aDialogText) {
 		File file;
@@ -38,9 +54,13 @@ public abstract class AbstractFileInputDialog extends AbstractInputDialog<File> 
 			}
 
 			String filePath = ConsoleReader.getInstance().readLine();
-			file = new File(filePath);
+			if (cancelOnZero && filePath.equals(ZERO)) {
+				file = null;
+			} else {
+				file = new File(filePath);
 
-			invalid = checkFile(file);
+				invalid = checkFile(file);
+			}
 		} while (invalid);
 		return file;
 	}

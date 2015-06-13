@@ -20,10 +20,13 @@ public abstract class AbstractInputDialog<T> extends AbstractMenuEntry {
 
 	@Override
 	public final void start() {
-		Map<String,T> inputs = new HashMap<String,T>();
+		Map<String, T> inputs = new HashMap<String, T>();
 		for (String dialogText : dialogTexts) {
 			printDialogText(dialogText);
-			inputs.put(dialogText,readInput(dialogText));
+			T input = readInput(dialogText);
+			if (input != null) {
+				inputs.put(dialogText, input);
+			}
 		}
 		processInputs(inputs);
 	}
