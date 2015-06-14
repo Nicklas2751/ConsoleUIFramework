@@ -16,7 +16,7 @@ package eu.wiegandt.nicklas.frameworks.consoleuiframework;
  */
 public abstract class AbstractMenuEntry {
 
-	private final String displayText;
+	private final String	displayText;
 
 	/**
 	 * The constructor.
@@ -24,7 +24,7 @@ public abstract class AbstractMenuEntry {
 	 * @param aDisplayText
 	 *            This text will be displayed in the menu.
 	 */
-	public AbstractMenuEntry(String aDisplayText) {
+	public AbstractMenuEntry(final String aDisplayText) {
 		displayText = aDisplayText;
 	}
 

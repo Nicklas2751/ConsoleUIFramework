@@ -1,4 +1,5 @@
 /**
+ * Package textenums.<br>
  * <b>Overview: </b><br>
  * <img src="doc-files/textenums-overview.png" alt="Package Overview">
  */

@@ -4,12 +4,12 @@ import eu.wiegandt.nicklas.frameworks.consoleuiframework.ConsoleTools;
 
 /**
  * This enum contains the error texts.
- * 
+ *
  * <br>
  * <hr>
  * <br>
  * <img src="doc-files/Errors.png" alt="Errors">
- * 
+ *
  * @author Nicklas Wiegandt (Nicklas2751)<br>
  *         <b>Mail:</b> nicklas@wiegandt.eu<br>
  *         <b>Jabber:</b> nicklas2751@elaon.de<br>
@@ -41,9 +41,9 @@ public enum Errors {
 	NUMBER_INPUT_INVALID(
 			"Ihre Eingabe war keine valide Nummer! Bitte versuchen Sie es erneut:");
 
-	private String displayText;
+	private String	displayText;
 
-	private Errors(String aDisplayText) {
+	private Errors(final String aDisplayText) {
 		displayText = aDisplayText;
 	}
 
@@ -57,11 +57,11 @@ public enum Errors {
 	/**
 	 * This method logs the display text as error in the console. The given
 	 * Throwable will be printed too.
-	 * 
+	 *
 	 * @param aCause
 	 *            This Throwable will be printed too.
 	 */
-	public void print(Throwable aCause) {
+	public void print(final Throwable aCause) {
 		ConsoleTools.getLogger().error(displayText, aCause);
 	}
 
@@ -75,11 +75,11 @@ public enum Errors {
 	/**
 	 * This method logs the display text as fatal in the console.The given
 	 * Throwable will be printed too.
-	 * 
+	 *
 	 * @param aCause
 	 *            This Throwable will be printed too.
 	 */
-	public void printFatal(Throwable aCause) {
+	public void printFatal(final Throwable aCause) {
 		ConsoleTools.getLogger().fatal(displayText, aCause);
 	}
 

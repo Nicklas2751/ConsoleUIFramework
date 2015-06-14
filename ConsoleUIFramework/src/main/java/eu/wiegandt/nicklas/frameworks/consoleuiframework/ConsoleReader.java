@@ -10,22 +10,22 @@ import eu.wiegandt.nicklas.frameworks.consoleuiframework.textenums.Errors;
 /**
  * This is a console line reader which can read strings and integers from the
  * console.
- * 
+ *
  * <br>
  * <hr>
  * <br>
  * <img src="doc-files/ConsoleReader.png" alt="ConsoleReader">
- * 
+ *
  * @author Nicklas Wiegandt (Nicklas2751)<br>
  *         <b>Mail:</b> nicklas@wiegandt.eu<br>
  *         <b>Jabber:</b> nicklas2751@elaon.de<br>
  *
  */
-public class ConsoleReader {
+public final class ConsoleReader {
 
-	private static ConsoleReader instance;
+	private static ConsoleReader	instance;
 
-	private BufferedReader bufferedReader;
+	private final BufferedReader	bufferedReader;
 
 	/**
 	 * @return A instance of the class.
@@ -40,16 +40,16 @@ public class ConsoleReader {
 	/**
 	 * Reads an integer from the console. If the console input wasn't an
 	 * integer, a error will be printed and the input will be read again.
-	 * 
+	 *
 	 * @return The read number.
 	 */
 	public static Integer readNumber() {
 		Integer number;
 		do {
-			String inputText = getInstance().readLine();
+			final String inputText = getInstance().readLine();
 			try {
 				number = Integer.parseInt(inputText);
-			} catch (NumberFormatException numberFormatException) {
+			} catch (final NumberFormatException numberFormatException) {
 				number = null;
 				Errors.NUMBER_INPUT_INVALID.print();
 			}
@@ -58,7 +58,8 @@ public class ConsoleReader {
 	}
 
 	private ConsoleReader() {
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		final InputStreamReader inputStreamReader = new InputStreamReader(
+				System.in);
 		bufferedReader = new BufferedReader(inputStreamReader);
 	}
 
@@ -68,21 +69,21 @@ public class ConsoleReader {
 	public void close() {
 		try {
 			bufferedReader.close();
-		} catch (IOException ioException2) {
+		} catch (final IOException ioException2) {
 			DebugMessages.BUFFERED_READER_CANT_CLOSED.print(ioException2);
 		}
 	}
 
 	/**
 	 * This methods read a line from the console as a string.
-	 * 
+	 *
 	 * @return The read line as a string.
 	 */
 	public String readLine() {
 		String line;
 		try {
 			line = bufferedReader.readLine();
-		} catch (IOException ioException) {
+		} catch (final IOException ioException) {
 			Errors.INPUT_READ_ERROR.printFatal(ioException);
 			line = "";
 		}

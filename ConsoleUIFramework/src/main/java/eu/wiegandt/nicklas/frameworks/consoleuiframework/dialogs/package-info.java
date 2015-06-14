@@ -1,4 +1,5 @@
 /**
+ * Package dialogs.<br>
  * <b>Overview: </b><br>
  * <img src="doc-files/dialogs-overview.png" alt="Package Overview">
  */
